@@ -1,5 +1,7 @@
 package com.example.otto.trabalhopratico2;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -97,8 +99,25 @@ public class video_list extends AppCompatActivity {
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                //String video_path = "http://www.youtube.com/watch?v=te6VqldjTT8";
+                String video_path = itemList.get(i).toString();
+                if (video_path.contains("youtube")){
+                    Uri uri = Uri.parse(video_path);
+                    uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                else if(video_path.contains("youtu.be")){
+                    String aux[] = video_path.split("youtu.be/");
+                    String aux2 = aux[1];
+                    String video_path2 = "http://www.youtube.com/watch?v="+aux2;
+                    Uri uri = Uri.parse(video_path2);
+                    uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
             }
+
         });
 
     }
