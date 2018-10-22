@@ -5,13 +5,14 @@
  */
 package com.example.otto.trabalhopratico1;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,8 @@ import android.widget.TimePicker;
 import android.provider.CalendarContract.Events;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText dataFim;
     private EditText horaInicio;
     private EditText horaFim;
-    private Button add,listaConvi;
     private EditText nome;
     private EditText local;
     private EditText descricao,nomeOrga,emailOrga,telOrga;
@@ -48,29 +50,29 @@ public class MainActivity extends AppCompatActivity {
         dataFim = (EditText)findViewById(R.id.txtEndDate);
         horaInicio = (EditText)findViewById(R.id.horaInicio);
         horaFim = (EditText)findViewById(R.id.horaFinne);
-        add = (Button)findViewById(R.id.botaoAdd);
+        Button add = (Button) findViewById(R.id.botaoAdd);
         nome = (EditText)findViewById(R.id.nomeEvento);
         local = (EditText)findViewById(R.id.localEvento);
         descricao = (EditText)findViewById(R.id.descEvento);
         nomeOrga = (EditText)findViewById(R.id.nomeOrga);
         emailOrga = (EditText)findViewById(R.id.emailOrga);
         telOrga = (EditText)findViewById(R.id.numeroOrga);
-        listaConvi = (Button)findViewById(R.id.botaoConvi);
+        Button listaConvi = (Button) findViewById(R.id.botaoConvi);
 
 
         dataInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentDate = Calendar.getInstance();
+                mCurrentDate = Calendar.getInstance(Locale.getDefault());
                 int year = mCurrentDate.get(Calendar.YEAR);
                 int month = mCurrentDate.get(Calendar.MONTH);
                 int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
-                        dataInicio.setText(selectedDay + "/" + selectedMonth + "/" + selectedYear);
-
+                        dataInicio.setText("#{selectedDay}/#{selectedMonth}/#{selectedYear}");
                         mCurrentDate.set(selectedYear, selectedMonth, selectedDay);
 
                     }
@@ -88,9 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
-                        dataFim.setText(selectedDay+"/"+selectedMonth+"/"+selectedYear);
+                        dataFim.setText("#{selectedDay}/#{selectedMonth}/#{selectedYear}");
 
                         mCurrentDate.set(selectedYear,selectedMonth,selectedDay);
 

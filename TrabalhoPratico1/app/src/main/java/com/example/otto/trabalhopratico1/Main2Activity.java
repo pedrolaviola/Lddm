@@ -1,48 +1,44 @@
 package com.example.otto.trabalhopratico1;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class Main2Activity extends AppCompatActivity {
 
-    private TextView txtnome,txtemail,txtnumero;
-    private String orgName,orgEmail,telorg;
-    private Button nextPg;
+    private TextView txtNome, txtEmail, txtNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        nextPg = (Button)findViewById(R.id.buttonTeste);
+        Button nextPg = (Button) findViewById(R.id.buttonTeste);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        txtNome = (TextView) findViewById(R.id.nomeOrga);
+        txtEmail = (TextView) findViewById(R.id.emailOrga);
+        txtNumero = (TextView) findViewById(R.id.telOrga);
 
-        txtnome = (TextView)findViewById(R.id.nomeOrga);
-        txtemail = (TextView)findViewById(R.id.emailOrga);
-        txtnumero = (TextView)findViewById(R.id.telOrga);
+        String orgName = getIntent().getStringExtra("nomeOrga");
+        String orgEmail = getIntent().getStringExtra("emailOrga");
+        String telOrg = getIntent().getStringExtra("telOrga");
 
-        Bundle getInfo = getIntent().getExtras();
-
-        orgName = getInfo.getString("nomeOrga");
-        orgEmail = getInfo.getString("emailOrga");
-        telorg = getInfo.getString("telOrga");
-
-        txtnome.setText(orgName);
-        txtemail.setText(orgEmail);
-        txtnumero.setText(telorg);
+        txtNome.setText(orgName);
+        txtEmail.setText(orgEmail);
+        txtNumero.setText(telOrg);
 
         nextPg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mudarPg = new Intent(getApplicationContext(),listaConvidados.class);
-                mudarPg.putExtra("nomeOrga",txtnome.getText().toString());
-                mudarPg.putExtra("emailOrga",txtemail.getText().toString());
-                mudarPg.putExtra("telOrga",txtnumero.getText().toString());
+                Intent mudarPg = new Intent(getApplicationContext(), listaConvidados.class);
+                mudarPg.putExtra("nomeOrga", txtNome.getText().toString());
+                mudarPg.putExtra("emailOrga", txtEmail.getText().toString());
+                mudarPg.putExtra("telOrga", txtNumero.getText().toString());
                 startActivity(mudarPg);
             }
         });
